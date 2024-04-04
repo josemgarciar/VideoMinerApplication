@@ -1,5 +1,6 @@
 package VimeoMiner.model.service;
 
+import VimeoMiner.model.vimeo.video.Datum;
 import VimeoMiner.model.vimeo.video.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -17,12 +18,12 @@ public class VideoService {
     String baseUri = "https://api.vimeo.com/channels/113480/videos";
     String token = "152307b18fa3949c3591a895137abe8e";
 
-    public List<Example> getVideos() {
+    public List<Datum> getVideos() {
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + token);
-        HttpEntity<Example[]> request = new HttpEntity<>(null, header);
+        HttpEntity<Example> request = new HttpEntity<>(null, header);
 
-        ResponseEntity<Example[]> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, Example[].class);
-        return List.of(response.getBody());
+        ResponseEntity<Example> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, Example.class);
+        return response.getBody().getData();
     }
 }

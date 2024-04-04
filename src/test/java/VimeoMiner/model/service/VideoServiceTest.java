@@ -1,5 +1,6 @@
 package VimeoMiner.model.service;
 
+import VimeoMiner.model.vimeo.video.Datum;
 import VimeoMiner.model.vimeo.video.Example;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ class VideoServiceTest {
 
     @Test
     void getVideos() {
-        List<Example> res = service.getVideos();
+        List<Datum> res = service.getVideos();
         System.out.println(res);
     }
 }
