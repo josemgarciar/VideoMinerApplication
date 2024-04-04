@@ -1,5 +1,5 @@
 
-package VimeoMiner.model.vimeo.video;
+package VimeoMiner.model.video;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

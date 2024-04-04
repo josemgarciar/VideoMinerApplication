@@ -1,5 +1,5 @@
 
-package VimeoMiner.model.vimeo.video;
+package VimeoMiner.model.video;
 
 import java.util.List;
 

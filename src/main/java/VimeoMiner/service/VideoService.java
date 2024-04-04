@@ -1,7 +1,7 @@
-package VimeoMiner.model.service;
+package VimeoMiner.service;
 
-import VimeoMiner.model.vimeo.video.Video;
-import VimeoMiner.model.vimeo.video.VideoList;
+import VimeoMiner.model.video.Video;
+import VimeoMiner.model.video.VideoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
