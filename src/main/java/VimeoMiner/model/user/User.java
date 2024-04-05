@@ -1,0 +1,116 @@
+
+package VimeoMiner.model.user;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "uri",
+    "name",
+    "link",
+    "pictures"
+})
+public class User {
+
+    @JsonProperty("uri")
+    private String uri;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("link")
+    private String link;
+    @JsonProperty("pictures")
+    private Pictures pictures;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+
+    @JsonProperty("uri")
+    public String getUri() {
+        return uri;
+    }
+
+    @JsonProperty("uri")
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return name;
+    }
+
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @JsonProperty("link")
+    public String getLink() {
+        return link;
+    }
+
+    @JsonProperty("link")
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    @JsonProperty("pictures")
+    public Pictures getPictures() {
+        return pictures;
+    }
+
+    @JsonProperty("pictures")
+    public void setPictures(Pictures pictures) {
+        this.pictures = pictures;
+    }
+
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(User.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("uri");
+        sb.append('=');
+        sb.append(((this.uri == null)?"<null>":this.uri));
+        sb.append(',');
+        sb.append("name");
+        sb.append('=');
+        sb.append(((this.name == null)?"<null>":this.name));
+        sb.append(',');
+        sb.append("link");
+        sb.append('=');
+        sb.append(((this.link == null)?"<null>":this.link));
+        sb.append(',');
+        sb.append("pictures");
+        sb.append('=');
+        sb.append(((this.pictures == null)?"<null>":this.pictures));
+        sb.append(',');
+        sb.append("additionalProperties");
+        sb.append('=');
+        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
+        sb.append(',');
+        if (sb.charAt((sb.length()- 1)) == ',') {
+            sb.setCharAt((sb.length()- 1), ']');
+        } else {
+            sb.append(']');
+        }
+        return sb.toString();
+    }
+
+}
