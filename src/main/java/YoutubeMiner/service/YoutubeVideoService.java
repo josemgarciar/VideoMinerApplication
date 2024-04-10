@@ -1,7 +1,5 @@
 package YoutubeMiner.service;
 
-import YoutubeMiner.model.video.Video;
-import YoutubeMiner.model.video.VideoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

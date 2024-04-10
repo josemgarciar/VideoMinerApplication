@@ -1,32 +1,13 @@
 
 package YoutubeMiner.model.video;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "publishedAt",
-    "channelId",
-    "title",
-    "description",
-    "thumbnails",
-    "channelTitle",
-    "tags",
-    "categoryId",
-    "liveBroadcastContent",
-    "defaultLanguage",
-    "localized",
-    "defaultAudioLanguage"
-})
-
-public class VideoDetails {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class VideoSnippetDetails {
 
     @JsonProperty("publishedAt")
     private String publishedAt;
-    @JsonProperty("channelId")
-    private String channelId;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -40,16 +21,6 @@ public class VideoDetails {
     @JsonProperty("publishedAt")
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
-    }
-
-    @JsonProperty("channelId")
-    public String getChannelId() {
-        return channelId;
-    }
-
-    @JsonProperty("channelId")
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
     }
 
     @JsonProperty("title")
@@ -75,14 +46,10 @@ public class VideoDetails {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(VideoDetails.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VideoSnippetDetails.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("publishedAt");
         sb.append('=');
         sb.append(((this.publishedAt == null)?"<null>":this.publishedAt));
-        sb.append(',');
-        sb.append("channelId");
-        sb.append('=');
-        sb.append(((this.channelId == null)?"<null>":this.channelId));
         sb.append(',');
         sb.append("title");
         sb.append('=');

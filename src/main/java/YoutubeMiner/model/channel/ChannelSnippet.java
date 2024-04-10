@@ -1,18 +1,11 @@
 
 package YoutubeMiner.model.channel;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "title",
-    "description",
-    "publishedAt"
-})
+import com.fasterxml.jackson.annotation.*;
 
-public class ChannelDetails {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ChannelSnippet {
 
     @JsonProperty("title")
     private String title;
@@ -51,11 +44,10 @@ public class ChannelDetails {
         this.publishedAt = publishedAt;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(ChannelDetails.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(ChannelSnippet.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("title");
         sb.append('=');
         sb.append(((this.title == null)?"<null>":this.title));
@@ -68,7 +60,6 @@ public class ChannelDetails {
         sb.append('=');
         sb.append(((this.publishedAt == null)?"<null>":this.publishedAt));
         sb.append(',');
-
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
