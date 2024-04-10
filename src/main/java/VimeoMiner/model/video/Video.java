@@ -1,6 +1,7 @@
 
 package VimeoMiner.model.video;
 
+import VimeoMiner.etl.ParseId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Video {
@@ -54,10 +55,18 @@ public class Video {
         this.releaseTime = releaseTime;
     }
 
+    public String getId(){
+        return ParseId.getIdFromUri(this.uri);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Video.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("id");
+        sb.append('=');
+        sb.append(((getId() == null)?"<null>":getId()));
+        sb.append(',');
         sb.append("uri");
         sb.append('=');
         sb.append(((this.uri == null)?"<null>":this.uri));
