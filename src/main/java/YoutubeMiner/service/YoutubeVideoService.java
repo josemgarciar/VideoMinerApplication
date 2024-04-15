@@ -1,5 +1,7 @@
 package YoutubeMiner.service;
 
+import YoutubeMiner.model.video.VideoSnippet;
+import YoutubeMiner.model.video.VideoSnippetSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,12 +15,12 @@ public class YoutubeVideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    String baseUri = "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=tcdKEy-aJ6o&key=AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ";
-    public Video getVideo(){
+    String baseUri = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ&channelId=UC8rNKrqBxJqL9izOOMxBJtw&part=snippet";
+    public VideoSnippetSearch getVideo(){
         HttpHeaders header = new HttpHeaders();
-        HttpEntity<VideoList> request = new HttpEntity<>(null, header);
-        ResponseEntity<VideoList> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, VideoList.class);
-        return response.getBody().getItems().get(0);
+        HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, header);
+        ResponseEntity<VideoSnippetSearch> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, VideoSnippetSearch.class);
+        return response.getBody();
     }
 
 }

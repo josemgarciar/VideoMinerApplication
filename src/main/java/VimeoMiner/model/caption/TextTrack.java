@@ -15,6 +15,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 public class TextTrack {
 
+    public TextTrack(TextTrack t) {
+        this.uri = t.getUri();
+        this.language = t.getLanguage();
+        this.id = t.getId();
+        this.name = t.getName();
+    }
+
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("language")

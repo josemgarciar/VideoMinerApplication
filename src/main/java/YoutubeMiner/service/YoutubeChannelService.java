@@ -1,10 +1,12 @@
 package YoutubeMiner.service;
 
 import YoutubeMiner.model.channel.Channel;
+import YoutubeMiner.model.channel.ChannelSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,8 +19,8 @@ public class YoutubeChannelService {
 
     public Channel getChannel() {
         HttpHeaders header = new HttpHeaders();
-        HttpEntity<ChannelList> request = new HttpEntity<>(null, header);
-        ResponseEntity<ChannelList> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, ChannelList.class);
+        HttpEntity<ChannelSearch> request = new HttpEntity<>(null, header);
+        ResponseEntity<ChannelSearch> response = restTemplate.exchange(baseUri, HttpMethod.GET, request, ChannelSearch.class);
         return response.getBody().getItems().get(0);
     }
 }

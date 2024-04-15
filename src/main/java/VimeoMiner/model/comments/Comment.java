@@ -16,6 +16,16 @@ import VimeoMiner.model.user.User;
 
 public class Comment {
 
+    public Comment(Comment param) {
+        this.uri = param.getUri();
+        this.text = param.getText();
+        this.createdOn = param.getCreatedOn();
+        this.user = param.getUser();
+        this.id = param.getId();
+    }
+
+
+    private String id;
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("text")
@@ -69,6 +79,9 @@ public class Comment {
     public String getId(){
         return ParseId.getIdFromComments(this.uri);
     }
+
+    public String setId(String id){ return this.id = id;}
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -2,10 +2,18 @@
 package VimeoMiner.model.video;
 
 import VimeoMiner.etl.ParseId;
+import VimeoMiner.model.caption.TextTrack;
+import VimeoMiner.model.channel.Channel;
+import VimeoMiner.model.comments.CommentsList;
+import YoutubeMiner.model.comment.Comment;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Video {
 
+    private String id;
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("name")
@@ -14,6 +22,42 @@ public class Video {
     private String description;
     @JsonProperty("release_time")
     private String releaseTime;
+
+    // These attributes have been manually added
+    @JsonProperty("comments")
+    private CommentsList comments;
+
+    @JsonProperty("captions")
+    private List<TextTrack> captions;
+
+
+    public Video (Video param){
+        this.uri = param.getUri();
+        this.name = param.getName();
+        this.description = param.getDescription();
+        this.description = param.getDescription();
+        this.releaseTime = param.getReleaseTime();
+        this.comments = param.getComments();
+        this.captions = param.getCaptions();
+    }
+
+    @JsonProperty("comments")
+    public CommentsList getComments() {
+        return comments;
+    }
+
+    @JsonProperty("comments")
+    public void setComments(CommentsList comments) {
+        this.comments = comments;
+    }
+
+    @JsonProperty("captions")
+    public List<TextTrack> getCaptions() { return captions; }
+
+    @JsonProperty("captions")
+    public void setCaptions(List<TextTrack> captions) {
+        this.captions = captions;
+    }
 
     @JsonProperty("uri")
     public String getUri() {
@@ -57,6 +101,9 @@ public class Video {
 
     public String getId(){
         return ParseId.getIdFromUri(this.uri);
+    }
+    public void setId(String Id) {
+        this.id = id;
     }
 
     @Override

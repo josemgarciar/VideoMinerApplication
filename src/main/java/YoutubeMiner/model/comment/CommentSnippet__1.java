@@ -4,7 +4,7 @@ package YoutubeMiner.model.comment;
 import com.fasterxml.jackson.annotation.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CommentSnippet__1 {
+public class  CommentSnippet__1 {
 
     @JsonProperty("textOriginal")
     private String textOriginal;

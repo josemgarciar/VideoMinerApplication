@@ -2,9 +2,15 @@ package VimeoMiner.model.channel;
 
 import VimeoMiner.etl.ParseId;
 import VimeoMiner.model.video.Video;
+import YoutubeMiner.model.video.VideoSnippet;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Channel {
+
+    private String id;
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("name")
@@ -14,7 +20,31 @@ public class Channel {
     @JsonProperty("created_time")
     private String createdTime;
 
-    // TODO: Add a list of videos to the Channel class
+    // This attribute has been added manually
+
+    @JsonProperty("videos")
+    private List<Video> videos;
+
+    public Channel() {
+        videos = new ArrayList<>();
+    }
+
+    public Channel (Channel param){
+        this.id = param.getId();
+        this.uri = param.getUri();
+        this.name = param.getName();
+        this.description = param.getDescription();
+        this.createdTime = param.getCreatedTime();
+        this.videos = param.getVideos();
+    }
+
+    @JsonProperty("videos")
+    public List<Video> getVideos(){ return videos; }
+
+    @JsonProperty("videos")
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
 
     @JsonProperty("uri")
     public String getUri() {
@@ -56,8 +86,10 @@ public class Channel {
         this.createdTime = createdTime;
     }
 
-    public String getId() {
-        return ParseId.getIdFromUri(this.uri);
+    public String getId() {return ParseId.getIdFromUri(this.uri);}
+
+    public void setId(String Id) {
+        this.id = id;
     }
 
     @Override

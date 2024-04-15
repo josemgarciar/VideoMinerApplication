@@ -2,6 +2,7 @@
 package VimeoMiner.model.user;
 
 
+import VimeoMiner.model.channel.Channel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -16,6 +17,15 @@ import VimeoMiner.etl.ParseId;
 })
 public class User {
 
+    public User (User param){
+        this.id = param.getId();
+        this.uri = param.getUri();
+        this.name = param.getName();
+        this.link = param.getLink();
+        this.pictures = param.getPictures();
+    }
+
+    private String id;
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("name")
@@ -68,6 +78,8 @@ public class User {
     public String getId() {
         return ParseId.getIdFromUri(this.uri);
     }
+
+    public void setId(String id) {this.id = id;}
 
     @Override
     public String toString() {
