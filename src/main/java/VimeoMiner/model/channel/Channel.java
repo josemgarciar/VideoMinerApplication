@@ -30,12 +30,11 @@ public class Channel {
     }
 
     public Channel (Channel param){
-        this.id = param.getId();
         this.uri = param.getUri();
         this.name = param.getName();
         this.description = param.getDescription();
         this.createdTime = param.getCreatedTime();
-        this.videos = param.getVideos();
+        this.videos = new ArrayList<>(); //JRP: The list of videos is empty by default
     }
 
     @JsonProperty("videos")
