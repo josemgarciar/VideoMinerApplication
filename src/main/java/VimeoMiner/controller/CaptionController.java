@@ -1,7 +1,7 @@
 package VimeoMiner.controller;
 
-import VimeoMiner.exception.CaptionNotFoundException;
-import VimeoMiner.exception.VideoNotFoundException;
+import exception.CaptionNotFoundException;
+import exception.VideoNotFoundException;
 import VimeoMiner.model.caption.TextTrack;
 import VimeoMiner.model.video.Video;
 import VimeoMiner.repository.CaptionRepository;

@@ -1,6 +1,6 @@
 package VimeoMiner.controller;
 
-import VimeoMiner.exception.CommentNotFoundException;
+import exception.CommentNotFoundException;
 import VimeoMiner.model.comments.Comment;
 import VimeoMiner.repository.CommentRepository;
 import jakarta.validation.Valid;

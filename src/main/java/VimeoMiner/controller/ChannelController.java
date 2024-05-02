@@ -1,6 +1,6 @@
 package VimeoMiner.controller;
 
-import VimeoMiner.exception.ChannelNotFoundException;
+import exception.ChannelNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

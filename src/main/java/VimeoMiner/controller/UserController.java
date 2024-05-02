@@ -1,6 +1,6 @@
 package VimeoMiner.controller;
 
-import VimeoMiner.exception.UserNotFoundException;
+import exception.UserNotFoundException;
 import VimeoMiner.model.user.User;
 import VimeoMiner.repository.UserRepository;
 import jakarta.validation.Valid;
