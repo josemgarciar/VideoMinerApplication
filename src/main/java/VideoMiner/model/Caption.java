@@ -47,6 +47,16 @@ public class Caption {
         this.language = language;
     }
 
+    public Caption(){
+        this.name = "Default Caption Name";
+        this.language = "Default Caption Language";
+    }
+
+    public Caption(Caption caption) {
+        this.id = caption.id;
+        this.name = caption.name;
+    }
+
     @Override
     public String toString() {
         return "Caption{" +

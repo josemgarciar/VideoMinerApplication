@@ -59,6 +59,13 @@ public class Comment {
         this.author = author;
     }
 
+    public Comment(Comment comment) {
+        this.id = comment.id;
+        this.text = comment.text;
+        this.createdOn = comment.createdOn;
+        this.author = comment.author;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +

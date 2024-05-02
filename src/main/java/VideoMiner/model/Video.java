@@ -90,6 +90,15 @@ public class Video {
         this.captions = captions;
     }
 
+    public Video(Video video){
+        this.id = video.id;
+        this.name = video.name;
+        this.description = video.description;
+        this.releaseTime = video.releaseTime;
+        this.comments = video.comments;
+        this.captions = video.captions;
+    }
+
     @Override
     public String toString() {
         return "Video{" +

@@ -81,6 +81,14 @@ public class Channel {
         this.videos = videos;
     }
 
+    public Channel(Channel channel) {
+        this.id = channel.id;
+        this.name = channel.name;
+        this.description = channel.description;
+        this.createdTime = channel.createdTime;
+        this.videos = channel.videos;
+    }
+
     @Override
     public String toString() {
         return "Channel{" +

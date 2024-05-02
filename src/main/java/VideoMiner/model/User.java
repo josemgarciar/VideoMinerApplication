@@ -62,6 +62,15 @@ public class User {
         this.picture_link = picture_link;
     }
 
+    public User(){}
+
+    public User(User user) {
+        this.id = user.id;
+        this.name = user.name;
+        this.user_link = user.user_link;
+        this.picture_link = user.picture_link;
+    }
+
     @Override
     public String toString() {
         return "User{" +
