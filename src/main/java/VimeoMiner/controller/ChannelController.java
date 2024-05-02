@@ -42,35 +42,4 @@ public class ChannelController {
         return newChannel;
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @Valid @RequestBody Channel updatedChannel) throws ChannelNotFoundException {
-        Optional<Channel> oldChannel = repository.findById(id);
-
-        if(oldChannel.isEmpty()){
-            throw new ChannelNotFoundException();
-        } else {
-            Channel channel = oldChannel.get();
-            channel.setName(updatedChannel.getName());
-            channel.setDescription(updatedChannel.getDescription());
-            channel.setCreatedTime(updatedChannel.getCreatedTime());
-            channel.setUri(updatedChannel.getUri());
-            repository.save(channel);
-            /* JRP: We don't include the videos in the put request, just like in the lab 7.
-             */
-        }
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) throws ChannelNotFoundException {
-        Optional<Channel> channel = repository.findById(id);
-
-        if(channel.isEmpty()){
-            throw new ChannelNotFoundException();
-        } else {
-            repository.delete(channel.get());
-        }
-    }
-
 }

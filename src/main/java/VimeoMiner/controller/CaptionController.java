@@ -51,40 +51,12 @@ public class CaptionController {
     public TextTrack createCaption(@RequestBody TextTrack caption, @PathVariable Long id) throws VideoNotFoundException {
         Optional<Video> video = videoRepository.findById(id);
 
-        if(video.isEmpty()){
+        if (video.isEmpty()) {
             throw new VideoNotFoundException();
         } else {
             video.get().getCaptions().add(caption);
             captionRepository.save(caption);
         }
         return caption;
-    }
-
-    @PutMapping("/texttracks/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long id, @RequestBody TextTrack updatedCaption) throws CaptionNotFoundException {
-        Optional<TextTrack> oldCaption = captionRepository.findById(id);
-
-        if(oldCaption.isEmpty()){
-            throw new CaptionNotFoundException();
-        } else {
-            TextTrack caption = oldCaption.get();
-            caption.setLanguage(updatedCaption.getLanguage());
-            caption.setUri(updatedCaption.getUri());
-            caption.setName(updatedCaption.getName());
-            captionRepository.save(caption);
-        }
-    }
-
-    @DeleteMapping("/texttracks/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) throws CaptionNotFoundException {
-        Optional<TextTrack> caption = captionRepository.findById(id);
-
-        if(caption.isEmpty()){
-            throw new CaptionNotFoundException();
-        } else {
-            captionRepository.delete(caption.get());
-        }
     }
 }

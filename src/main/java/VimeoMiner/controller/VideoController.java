@@ -1,16 +1,50 @@
 package VimeoMiner.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import VimeoMiner.exception.ChannelNotFoundException;
+import VimeoMiner.exception.VideoNotFoundException;
+import VimeoMiner.model.channel.Channel;
+import VimeoMiner.model.video.Video;
+import VimeoMiner.repository.ChannelRepository;
+import VimeoMiner.repository.VideoRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("https://api.vimeo.com/channels/{id}/videos")
 public class VideoController {
 
-    /*
-     JRP: The controllers and repositories class don`t belong to VimeoMiner/YoutubeMiner,
-     they belong to VideoMiner. We cant just switch these classes to the VideoMiner package
-     and call it a day
-     */
+    @Autowired
+    VideoRepository repository;
+
+
+    @GetMapping
+    public List<Video> getVideos() {
+        return repository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Video findOne(@PathVariable Long id) throws VideoNotFoundException {
+
+        Optional<Video> video = repository.findById(id);
+
+        if(video.isEmpty()){
+            throw new VideoNotFoundException();
+        }
+
+        return video.get();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public Video create(@Valid @RequestBody Video video) {
+        Video newVideo = repository.save(new Video(video));
+
+        return newVideo;
+    }
+
 }
