@@ -5,6 +5,9 @@ package YoutubeMiner.model.video;
 import YoutubeMiner.model.caption.Caption;
 import YoutubeMiner.model.comment.Comment;
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;

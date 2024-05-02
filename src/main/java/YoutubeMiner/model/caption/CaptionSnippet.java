@@ -1,13 +1,16 @@
 package YoutubeMiner.model.caption;
 
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.Column;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CaptionSnippet {
 
     @JsonProperty("name")
+    @Column(name = "name")
     private String name;
     @JsonProperty("language")
+    @Column(name = "language")
     private String language;
 
     @JsonProperty("language")
