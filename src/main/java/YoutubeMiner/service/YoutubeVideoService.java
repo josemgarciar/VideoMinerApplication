@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 public class YoutubeVideoService {
     @Autowired
     RestTemplate restTemplate;
-
     String baseUri = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ&channelId=UC8rNKrqBxJqL9izOOMxBJtw&part=snippet";
     public VideoSnippetSearch getVideo(){
         HttpHeaders header = new HttpHeaders();

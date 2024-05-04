@@ -1,6 +1,7 @@
 package VideoMiner.videoController;
 
 import VideoMiner.model.Channel;
+import VideoMiner.model.Video;
 import VideoMiner.repository.ChannelRepository;
 import exception.ChannelNotFoundException;
 import jakarta.validation.Valid;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("https://localhost:8080/videominer/channels")
+@RequestMapping("http://localhost:8080/videominer/channels")
 public class ChannelController {
 
     @Autowired
@@ -40,7 +41,6 @@ public class ChannelController {
     @PostMapping
     public Channel create(@Valid @RequestBody Channel channel) {
         Channel newChannel = repository.save(new Channel(channel));
-
         return newChannel;
     }
 

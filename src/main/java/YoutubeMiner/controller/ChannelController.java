@@ -19,7 +19,7 @@ public class ChannelController {
     public List<Channel> getChannels(){
         return channelRepository.findAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping("&channelId={id}")
     public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
         Optional<Channel> foundChannel = channelRepository.findById(id);
 
@@ -37,7 +37,6 @@ public class ChannelController {
          entonces tendremos que hacer el GET dentro del POST y después enviarlo a videoMiner
           También tenemos que separar los POST de los GET, ya que las URIs son distintas*/
 
-        return newChannel;
     }
 
 
