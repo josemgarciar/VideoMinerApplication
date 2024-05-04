@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("https://localhost:8080/videominer/videos")
+@RequestMapping("/videominer/videos")
 public class VideoController {
 
     @Autowired

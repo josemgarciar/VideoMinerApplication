@@ -3,21 +3,26 @@ package VideoMiner.videoController;
 import VideoMiner.model.Channel;
 import VideoMiner.model.Video;
 import VideoMiner.repository.ChannelRepository;
+import VideoMiner.repository.VideoRepository;
+import YoutubeMiner.service.YoutubeChannelService;
+import YoutubeMiner.service.YoutubeVideoService;
 import exception.ChannelNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("http://localhost:8080/videominer/channels")
+@RequestMapping("/videominer/channels")
 public class ChannelController {
+
     @Autowired
     ChannelRepository repository;
-
+    YoutubeChannelService service = new YoutubeChannelService();
 
     @GetMapping
     public List<Channel> getChannels() {
@@ -25,9 +30,9 @@ public class ChannelController {
     }
 
     @GetMapping("/{id}")
-    public Channel findOne(@PathVariable Long id) throws ChannelNotFoundException {
+    public Channel findOne(@PathVariable String id) throws ChannelNotFoundException {
 
-        Optional<Channel> channel = repository.findById(id);
+        Optional<Channel> channel = repository.findAll().stream().filter(x -> x.getId().equals(id)).findFirst();
 
         if(channel.isEmpty()){
             throw new ChannelNotFoundException();
@@ -40,8 +45,8 @@ public class ChannelController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Channel create(@Valid @RequestBody Channel channel) {
-        Channel newChannel = repository.save(new Channel(channel));
-        return newChannel;
+        repository.save(channel);
+        return channel;
     }
 
 

@@ -27,6 +27,10 @@ public class Comment {
     @NotNull(message = "Comment author cannot be null")
     private User author;
 
+    public Comment() {
+
+    }
+
     public String getId() {
         return id;
     }

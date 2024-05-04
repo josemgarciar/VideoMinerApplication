@@ -1,5 +1,6 @@
 package YoutubeMiner.service;
 
+import VideoMiner.model.Video;
 import YoutubeMiner.model.caption.CaptionSearch;
 import YoutubeMiner.model.channel.Channel;
 import YoutubeMiner.model.comment.CommentSearch;
@@ -7,6 +8,8 @@ import YoutubeMiner.model.video.VideoSnippetSearch;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class ServiceTest {
@@ -16,7 +19,7 @@ public class ServiceTest {
 
     @Test
     void getChannel() {
-        Channel res = serviceChannel.getChannel();
+        VideoMiner.model.Channel res = serviceChannel.getChannel();
         System.out.println(res);
     }
 
@@ -24,7 +27,7 @@ public class ServiceTest {
     YoutubeVideoService serviceVideo;
     @Test
     void getVideo() {
-        VideoSnippetSearch res = serviceVideo.getVideo();
+        List<Video> res = serviceVideo.getVideo();
         System.out.println(res);
     }
 
