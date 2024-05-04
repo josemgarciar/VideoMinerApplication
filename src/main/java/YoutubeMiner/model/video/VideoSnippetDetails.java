@@ -2,8 +2,10 @@
 package YoutubeMiner.model.video;
 
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.Table;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name="youtube_video")
 public class VideoSnippetDetails {
 
     @JsonProperty("publishedAt")

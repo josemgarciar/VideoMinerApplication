@@ -90,6 +90,10 @@ public class Video {
         this.captions = captions;
     }
 
+    public Video (){
+
+    }
+
     public Video(Video video){
         this.id = video.id;
         this.name = video.name;

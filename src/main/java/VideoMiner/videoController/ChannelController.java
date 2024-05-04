@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("http://localhost:8080/videominer/channels")
 public class ChannelController {
-
     @Autowired
     ChannelRepository repository;
 
@@ -37,12 +36,14 @@ public class ChannelController {
         return channel.get();
     }
 
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Channel create(@Valid @RequestBody Channel channel) {
         Channel newChannel = repository.save(new Channel(channel));
         return newChannel;
     }
+
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
