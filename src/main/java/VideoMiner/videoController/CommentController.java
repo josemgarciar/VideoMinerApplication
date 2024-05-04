@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("https://localhost:8080/videominer/comments")
+@RequestMapping("/videominer/comments")
 public class CommentController {
     @Autowired
     CommentRepository repository;
@@ -25,9 +25,9 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public Comment findOne(@PathVariable Long id) throws CommentNotFoundException {
+    public Comment findOne(@PathVariable String id) throws CommentNotFoundException {
 
-        Optional<Comment> comment = repository.findById(id);
+        Optional<Comment> comment = repository.findAll().stream().filter(x -> x.getId().equals(id)).findFirst();
 
         if(comment.isEmpty()){
             throw new CommentNotFoundException();
@@ -39,14 +39,14 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Comment create(@Valid @RequestBody Comment comment) {
-        Comment newComment = repository.save(new Comment(comment));
-        return newComment;
+        repository.save(comment);
+        return comment;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @Valid @RequestBody Comment comment) throws CommentNotFoundException {
-        Optional<Comment> foundComment = repository.findById(id);
+        Optional<Comment> foundComment = repository.findAll().stream().filter(c -> c.getId().equals(id)).findFirst();
 
         if(foundComment.isEmpty()){
             throw new CommentNotFoundException();

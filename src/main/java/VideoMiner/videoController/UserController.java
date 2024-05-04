@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("https://localhost:8080/videominer/users")
+@RequestMapping("/videominer/users")
 public class UserController {
 
     @Autowired
@@ -23,9 +23,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User findOne(@PathVariable Long id) throws UserNotFoundException {
+    public User findOne(@PathVariable String id) throws UserNotFoundException {
 
-        Optional<User> user = userRepository.findById(id);
+        Optional<User> user = userRepository.findAll().stream().filter(u -> u.getId().equals(id)).findFirst();
 
         if(user.isEmpty()){
             throw new UserNotFoundException();
@@ -37,9 +37,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User create(@RequestBody User user) {
-        User newUser = userRepository.save(new User(user));
+        userRepository.save(user);
 
-        return newUser;
+        return user;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

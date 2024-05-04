@@ -24,9 +24,9 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public Video findOne(@PathVariable Long id) throws VideoNotFoundException {
+    public Video findOne(@PathVariable String id) throws VideoNotFoundException {
 
-        Optional<Video> video = videoRepository.findById(id);
+        Optional<Video> video = videoRepository.findAll().stream().filter(x -> x.getId().equals(id)).findFirst();
 
         if(video.isEmpty()){
             throw new VideoNotFoundException();
@@ -38,9 +38,8 @@ public class VideoController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Video create(@RequestBody Video video) {
-        Video newVideo = videoRepository.save(new Video(video));
-
-        return newVideo;
+        videoRepository.save(video);
+        return video;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

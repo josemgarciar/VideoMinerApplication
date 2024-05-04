@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("https://localhost:8080/videominer/captions")
+@RequestMapping("/videominer/captions")
 public class CaptionController {
 
     @Autowired
@@ -21,8 +21,8 @@ public class CaptionController {
     public List<Caption> getAll() { return captionRepository.findAll(); }
 
     @GetMapping("/{id}")
-    public Caption getCaptionById(@PathVariable Long id) throws CaptionNotFoundException {
-        Optional<Caption> foundCaption = captionRepository.findById(id);
+    public Caption getCaptionById(@PathVariable String id) throws CaptionNotFoundException {
+        Optional<Caption> foundCaption = captionRepository.findAll().stream().filter(c -> c.getId().equals(id)).findFirst();
 
         if (foundCaption.isEmpty()) {
             throw new CaptionNotFoundException();
@@ -34,9 +34,8 @@ public class CaptionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Caption create(@Valid @RequestBody Caption caption) {
-        Caption newCaption = captionRepository.save(new Caption(caption));
-
-        return newCaption;
+        captionRepository.save(caption);
+        return caption;
     }
 
     @PutMapping("/{id}")
