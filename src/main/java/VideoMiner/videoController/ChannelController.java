@@ -10,9 +10,14 @@ import YoutubeMiner.service.YoutubeVideoService;
 import exception.ChannelNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +33,34 @@ public class ChannelController {
 
 
     @GetMapping()
-    public List<Channel> getChannels() {
-        return repository.findAll();
+    public List<Channel> getChannels(@RequestParam(required = false) String name,
+                                     @RequestParam(required = false) String order, // + o -
+                                     @RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "1") int size) {
+
+        Pageable paging;
+
+        if (order != null) {
+            if (order.startsWith("-"))
+                paging = PageRequest.of(page, size, Sort.by(order.substring(1)).descending());
+            else
+                paging = PageRequest.of(page, size, Sort.by(order).ascending());
+        } else {
+            paging = PageRequest.of(page, size);
+        }
+
+
+        Page<Channel> pageChannels;
+
+        if(name == null) {
+            pageChannels = repository.findAll(paging);
+        } else {
+            pageChannels = repository.findByName(name, paging);
+        }
+
+        return pageChannels.getContent();
     }
+
 
     @GetMapping("/{id}")
     public Channel findOne(@PathVariable String id) throws ChannelNotFoundException {
