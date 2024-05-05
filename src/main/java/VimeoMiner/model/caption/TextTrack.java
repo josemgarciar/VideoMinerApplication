@@ -22,6 +22,13 @@ public class TextTrack {
         this.name = t.getName();
     }
 
+    public TextTrack () {
+        this.uri = null;
+        this.language = null;
+        this.id = null;
+        this.name = null;
+    }
+
     @JsonProperty("uri")
     private String uri;
     @JsonProperty("language")
