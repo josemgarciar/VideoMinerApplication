@@ -25,6 +25,14 @@ public class User {
         this.pictures = param.getPictures();
     }
 
+    public User(){
+        this.id = null;
+        this.uri = null;
+        this.name = null;
+        this.link = null;
+        this.pictures = null;
+    }
+
     private String id;
     @JsonProperty("uri")
     private String uri;

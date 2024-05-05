@@ -24,6 +24,14 @@ public class Comment {
         this.id = param.getId();
     }
 
+    public Comment() {
+        this.uri = null;
+        this.text = null;
+        this.createdOn = null;
+        this.user = null;
+        this.id = null;
+    }
+
 
     private String id;
     @JsonProperty("uri")
@@ -80,7 +88,7 @@ public class Comment {
         return ParseId.getIdFromComments(this.uri);
     }
 
-    public String setId(String id){ return this.id = id;}
+    public String setId(String id){ return this.id = String.valueOf(id);}
 
     @Override
     public String toString() {

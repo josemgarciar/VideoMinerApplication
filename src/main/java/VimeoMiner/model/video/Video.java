@@ -3,15 +3,22 @@ package VimeoMiner.model.video;
 
 import VimeoMiner.etl.ParseId;
 import VimeoMiner.model.caption.TextTrack;
-import VimeoMiner.model.channel.Channel;
 import VimeoMiner.model.comments.CommentsList;
-import YoutubeMiner.model.comment.Comment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Video {
+
+    public Video() {
+        this.comments = null;
+        this.captions = null;
+        this.id = null;
+        this.uri = null;
+        this.name = null;
+        this.description = null;
+        this.releaseTime = null;
+    }
 
     private String id;
     @JsonProperty("uri")

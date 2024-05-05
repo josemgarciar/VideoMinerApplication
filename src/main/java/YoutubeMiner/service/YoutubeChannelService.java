@@ -15,7 +15,7 @@ public class YoutubeChannelService {
 
     RestTemplate restTemplate = new RestTemplate();
 
-    String baseUri = "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ&forUsername=Willyrex&part=snippet";
+    String baseUri = "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ&part=snippet&id=UC8rNKrqBxJqL9izOOMxBJtw";
 
     public VideoMiner.model.Channel getChannel() {
         HttpHeaders header = new HttpHeaders();

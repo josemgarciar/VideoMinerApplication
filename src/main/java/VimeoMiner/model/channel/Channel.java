@@ -111,6 +111,10 @@ public class Channel {
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
         sb.append(',');
+        sb.append("videos");
+        sb.append('=');
+        sb.append(((this.videos == null)?"<null>":this.videos));
+        sb.append(',');
         sb.append("releaseTime");
         sb.append('=');
         sb.append(((this.createdTime == null)?"<null>":this.createdTime));
