@@ -5,6 +5,7 @@ import VideoMiner.model.Comment;
 import VideoMiner.repository.CommentRepository;
 import exception.ChannelNotFoundException;
 import exception.CommentNotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class CommentController {
     CommentRepository repository;
 
     @GetMapping
-    public List<Comment> getChannels() {
+    public List<Comment> getComments() {
         return repository.findAll();
     }
 

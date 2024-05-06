@@ -8,6 +8,7 @@ import VimeoMiner.model.video.VideoList;
 import YoutubeMiner.service.YoutubeChannelService;
 import YoutubeMiner.service.YoutubeVideoService;
 import exception.ChannelNotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "VideoMinerChannel", description ="VideoMinerApi API")
 @RestController
 @RequestMapping("/videominer/channels")
 public class ChannelController {
