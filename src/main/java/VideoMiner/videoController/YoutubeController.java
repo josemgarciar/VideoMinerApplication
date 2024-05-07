@@ -39,7 +39,7 @@ public class YoutubeController {
 
     VideoMiner.transforms.youtube YoutubeTransform;
 
-    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Youtube API", tags = { "Youtube", "get"})
+    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Youtube API", tags = { "Youtube", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from Youtube",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -69,7 +69,7 @@ public class YoutubeController {
         }
     }
 
-    @Operation(summary = "Post a Youtube Channel to the DataBase", description = "Post a Youtube Channel in DataBase giving the id of the Youtube channel", tags = { "Youtube", "post"})
+    @Operation(summary = "Post a Youtube Channel to the DataBase", description = "Post a Youtube Channel in DataBase giving the id of the Youtube channel", tags = { "Youtube", "Post operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Post a channel from Youtube to the database",
                     content = {@Content(schema = @Schema(implementation = Channel.class),

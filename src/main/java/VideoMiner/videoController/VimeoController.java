@@ -35,7 +35,7 @@ public class VimeoController {
 
     RestTemplate restTemplate = new RestTemplate();
 
-    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Vimeo API", tags = { "Vimeo", "get"})
+    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Vimeo API", tags = { "Vimeo", "Get Operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from Vimeo",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -65,7 +65,7 @@ public class VimeoController {
 
     }
 
-    @Operation(summary = "Post a Vimeo Channel", description = "Post a Vimeo Channel in DataBase giving the id of the Vimeo channel", tags = { "Vimeo", "post"})
+    @Operation(summary = "Post a Vimeo Channel", description = "Post a Vimeo Channel in DataBase giving the id of the Vimeo channel", tags = { "Vimeo", "Post Operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Post a channel from Vimeo to the database",
                     content = {@Content(schema = @Schema(implementation = Channel.class),

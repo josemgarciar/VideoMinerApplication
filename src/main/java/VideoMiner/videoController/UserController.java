@@ -1,7 +1,13 @@
 package VideoMiner.videoController;
 
+import VideoMiner.model.Comment;
 import exception.UserNotFoundException;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import VideoMiner.model.User;
@@ -18,8 +24,31 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<User> getUsers(@Parameter(description = "Name of the comment. Used to search users by its name.") @RequestParam(required = false) String name,
+                               @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
+                               @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
+                               @Parameter(description = "Size of the response page. By default, VideoMiner will show five users per page.")@RequestParam(defaultValue = "5") int size) {
+
+
+        Pageable paging;
+
+        if (order != null) {
+            if (order.startsWith("-"))
+                paging = PageRequest.of(page, size, Sort.by(order.substring(1)).descending());
+            else
+                paging = PageRequest.of(page, size, Sort.by(order).ascending());
+        } else {
+            paging = PageRequest.of(page, size);
+        }
+
+        Page<User> pageUsers;
+
+        if(name == null) {
+            pageUsers = userRepository.findAll(paging);
+        } else {
+            pageUsers = userRepository.findByName(name, paging);
+        }
+        return pageUsers.getContent();
     }
 
     @GetMapping("/{id}")
