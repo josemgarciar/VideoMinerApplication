@@ -52,7 +52,9 @@ public class YoutubeController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Channel findOneYoutube(@Parameter(description ="ID of the channel to be searched") @PathVariable String id) throws ChannelNotFoundException, VideoWithoutCommentsException {
+    public Channel findOneYoutube(@Parameter(description ="ID of the channel to be searched") @PathVariable String id,
+                                  @Parameter(description = "Maximum number of videos to be posted. Only used when called from the POST operation")@RequestParam(required = false, defaultValue = "10") Integer maxVideos,
+                                  @Parameter(description = "Maximum number of comments to be posted. Only used when called from the POST operation")@RequestParam(required = false, defaultValue = "10")Integer maxComments) throws ChannelNotFoundException, VideoWithoutCommentsException {
 
         HttpHeaders header = new HttpHeaders();
         HttpEntity<ChannelSearch> request = new HttpEntity<>(null, header);
@@ -65,7 +67,16 @@ public class YoutubeController {
         if(response.getBody() == null){
             throw new ChannelNotFoundException();
         } else {
-            return VideoMiner.transforms.youtube.convertToChannel(response.getBody(), id);
+            Channel videoChannel =  VideoMiner.transforms.youtube.convertToChannel(response.getBody(), id);
+            if(videoChannel.getVideos().size() > maxVideos){
+                videoChannel.setVideos(videoChannel.getVideos().subList(0, maxVideos));
+            }
+            for (Video v : videoChannel.getVideos()){
+                if(v.getComments().size() > maxComments) {
+                    v.setComments(v.getComments().subList(0,maxComments));
+                }
+            }
+            return videoChannel;
         }
     }
 
@@ -82,8 +93,10 @@ public class YoutubeController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
-    public Channel saveYouTube(@Parameter(description = "ID of the channel to be searched in Youtube and saved in the DataBase")@PathVariable String id) throws ChannelNotFoundException, VideoWithoutCommentsException {
-        Channel channel = findOneYoutube(id);
+    public Channel saveYouTube(@Parameter(description = "ID of the channel to be searched in Youtube and saved in the DataBase")@PathVariable String id,
+            @Parameter(description= "Maximum number of videos to post")@RequestParam(required = false, defaultValue = "10") Integer maxVideos,
+            @Parameter(description= "Maximum number of comments to post")@RequestParam(required = false, defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, VideoWithoutCommentsException {
+        Channel channel = findOneYoutube(id, maxVideos, maxComments);
         channelRepository.save(channel);
         return channel;
     }

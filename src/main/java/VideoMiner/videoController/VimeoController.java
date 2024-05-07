@@ -62,10 +62,15 @@ public class VimeoController {
             throw new ChannelNotFoundException();
         } else {
             Channel videoChannel = VideoMiner.transforms.vimeo.convertToChannel(response, id);
-            videoChannel.setVideos(videoChannel.getVideos().subList(0, maxVideos));
-            for (Video v : videoChannel.getVideos()){
-                v.setComments(v.getComments().subList(0,maxComments));
+            if(videoChannel.getVideos().size() > maxVideos){
+                videoChannel.setVideos(videoChannel.getVideos().subList(0, maxVideos));
             }
+            for (Video v : videoChannel.getVideos()){
+                if(v.getComments().size() > maxComments) {
+                    v.setComments(v.getComments().subList(0,maxComments));
+                }
+            }
+
             return videoChannel;
         }
     }
