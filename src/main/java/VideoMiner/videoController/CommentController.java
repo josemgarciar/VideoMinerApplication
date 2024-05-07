@@ -3,9 +3,12 @@ package VideoMiner.videoController;
 import VideoMiner.model.Caption;
 import VideoMiner.model.Channel;
 import VideoMiner.model.Comment;
+import VideoMiner.model.Video;
 import VideoMiner.repository.CommentRepository;
+import VideoMiner.repository.VideoRepository;
 import exception.ChannelNotFoundException;
 import exception.CommentNotFoundException;
+import exception.VideoNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,10 +29,12 @@ import java.util.List;
 import java.util.Optional;
 @Tag(name="Comments", description = "Comments operations")
 @RestController
-@RequestMapping("/videominer/comments")
+@RequestMapping("/videominer")
 public class CommentController {
     @Autowired
     CommentRepository repository;
+    @Autowired
+    VideoRepository videoRepository;
 
     @Operation(summary = "Find all comments", description = "Retrieve all comments from VideoMiner", tags = { "Comments", "Get operations"})
     @ApiResponses({
@@ -38,11 +43,11 @@ public class CommentController {
                             mediaType = "application/json")
                     })
     })
-    @GetMapping
-    public List<Comment> getComments(@Parameter(description = "Name of the comment. Used to search comments by its name.") @RequestParam(required = false) String name,
+    @GetMapping("/comments")
+    public List<Comment> getComments( @Parameter(description = "Word or text used to search if comments contains that string.") @RequestParam(required = false) String text,
                                      @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                      @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show five comments per page.")@RequestParam(defaultValue = "5") int size) {
+                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show five comments per page.")@RequestParam(defaultValue = "10") int size) {
 
         Pageable paging;
 
@@ -57,10 +62,10 @@ public class CommentController {
 
         Page<Comment> pageComments;
 
-        if(name == null) {
-            pageComments = repository.findAll(paging);
-        } else {
-            pageComments = repository.findByName(name, paging); //TODO: Hay que probar como funciona (o si funciona) el findByName, ya que comments no tiene name.
+        if(text == null) {
+          pageComments = repository.findAll(paging);
+       } else {
+            pageComments = repository.findCommentsByTextContainingIgnoreCase(text, paging); //TODO: Hay que probar como funciona (o si funciona) el findByName, ya que comments no tiene name.
         }
         return pageComments.getContent();
     }
@@ -76,7 +81,7 @@ public class CommentController {
                     content = {@Content(schema = @Schema())
                     })
     })
-    @GetMapping("/{id}")
+    @GetMapping("/comments/{id}")
     public Comment findOne(@Parameter(description = "ID of the comment to be searched")@PathVariable String id) throws CommentNotFoundException {
 
         Optional<Comment> comment = repository.findAll().stream().filter(x -> x.getId().equals(id)).findFirst();
@@ -88,7 +93,30 @@ public class CommentController {
         return comment.get();
     }
 
-    @Operation(summary = "Create a comment", description = "Post a comment to the database", tags = { "Comments", "Post Operations"})
+    @Operation(summary = "Find a list of comments by video ID", description = "Find a list of comments from a video given the video ID", tags = { "Comments", "Get operations"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of comments from a video by its ID",
+                    content = {@Content(schema = @Schema(implementation = Comment.class),
+                            mediaType = "application/json")
+                    }),
+
+            @ApiResponse(responseCode = "404", description = "Video not found",
+                    content = {@Content(schema = @Schema())
+                    })
+    })
+    @GetMapping("/videos/{id}/comments")
+    public List<Comment> findCommentsByVideoId(@Parameter(description = "ID of the comment to be searched")@PathVariable String id) throws VideoNotFoundException {
+
+        Optional<Video> video = videoRepository.findAll().stream().filter(x -> x.getId().equals(id)).findFirst();
+
+        if(video.isEmpty()){
+            throw new VideoNotFoundException();
+        }
+
+        return video.get().getComments();
+    }
+
+    @Operation(summary = "Create a comment", description = "Post a comment to the database", tags = { "Comments", "Post operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Comment posted in the database",
                     content = {@Content(schema = @Schema(implementation = Comment.class),
@@ -96,13 +124,13 @@ public class CommentController {
                     })
     })
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/comments")
     public Comment create(@Parameter(description = "Comment to be posted in the database")@Valid @RequestBody Comment comment) {
         repository.save(comment);
         return comment;
     }
 
-    @Operation(summary = "Update a comment", description = "Update comment information given the comment ID.", tags = { "Comments", "Put Operations"})
+    @Operation(summary = "Update a comment", description = "Update comment information given the comment ID.", tags = { "Comments", "Put operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Comment updated",
                     content = {@Content(schema = @Schema())
@@ -113,7 +141,7 @@ public class CommentController {
                     })
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{id}")
+    @PutMapping("/comments/{id}")
     public void update(@Parameter(description = "ID of the comment to be updated") @PathVariable String id,
                        @Parameter(description = "Comment object with the updated information")@Valid @RequestBody Comment comment) throws CommentNotFoundException {
         Optional<Comment> foundComment = repository.findAll().stream().filter(c -> c.getId().equals(id)).findFirst();
@@ -131,7 +159,7 @@ public class CommentController {
         repository.save(comment);
     }
 
-    @Operation(summary = "Delete a comment", description = "Delete a comment from the database given the comment ID", tags = { "Comments", "Delete Operations"})
+    @Operation(summary = "Delete a comment", description = "Delete a comment from the database given the comment ID", tags = { "Comments", "Delete operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Comment deleted",
                     content = {@Content(schema = @Schema())
@@ -141,7 +169,7 @@ public class CommentController {
                     })
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/comments/{id}")
     public void delete(@Parameter(description = "ID of the comment to be deleted")@PathVariable Long id) throws CommentNotFoundException {
         Optional<Comment> foundComment = repository.findById(id);
 

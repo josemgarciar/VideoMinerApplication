@@ -39,7 +39,7 @@ public class ChannelController {
     @Autowired
     ChannelRepository repository;
 
-    @Operation(summary = "Get all channels", description = "Retrieve all channels from VideoMiner", tags = { "Channels", "Get Operations"})
+    @Operation(summary = "Get all channels", description = "Retrieve all channels from VideoMiner", tags = { "Channels", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from Vimeo",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -75,7 +75,7 @@ public class ChannelController {
         return pageChannels.getContent();
     }
 
-    @Operation(summary = "Find a channel by id", description = "Find a channel by id in VimeoMiner", tags = { "Channels", "Get Operations"})
+    @Operation(summary = "Find a channel by id", description = "Find a channel by id in VimeoMiner", tags = { "Channels", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from VideoMiner",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -98,7 +98,7 @@ public class ChannelController {
         return channel.get();
     }
 
-    @Operation(summary = "Create a channel", description = "Post a channel to the database", tags = { "Channels", "Post Operations"})
+    @Operation(summary = "Create a channel", description = "Post a channel to the database", tags = { "Channels", "Post operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Channel posted in the database",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -112,7 +112,7 @@ public class ChannelController {
         return channel;
     }
 
-    @Operation(summary = "Update a channel", description = "Update channel information given the channel ID.", tags = { "Channels", "Put Operations"})
+    @Operation(summary = "Update a channel", description = "Update channel information given the channel ID.", tags = { "Channels", "Put operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Channel updated",
                     content = {@Content(schema = @Schema())

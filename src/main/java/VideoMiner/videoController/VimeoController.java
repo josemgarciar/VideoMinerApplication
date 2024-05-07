@@ -35,7 +35,7 @@ public class VimeoController {
 
     RestTemplate restTemplate = new RestTemplate();
 
-    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Vimeo API", tags = { "Vimeo", "Get Operations"})
+    @Operation(summary = "Find a channel by id", description = "Find a channel by id in Vimeo API", tags = { "Vimeo", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from Vimeo",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
@@ -59,13 +59,13 @@ public class VimeoController {
         if(response.getBody() == null){
             throw new ChannelNotFoundException();
         } else {
-            return VimeoTransform.convertToChannel(response, id);
+            return VideoMiner.transforms.vimeo.convertToChannel(response, id);
         }
 
 
     }
 
-    @Operation(summary = "Post a Vimeo Channel", description = "Post a Vimeo Channel in DataBase giving the id of the Vimeo channel", tags = { "Vimeo", "Post Operations"})
+    @Operation(summary = "Post a Vimeo Channel", description = "Post a Vimeo Channel in DataBase giving the id of the Vimeo channel", tags = { "Vimeo", "Post operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Post a channel from Vimeo to the database",
                     content = {@Content(schema = @Schema(implementation = Channel.class),

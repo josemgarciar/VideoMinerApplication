@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    Page<Comment> findByName(String name, Pageable pageable);
     Page<Comment> findAll(Pageable pageable);
+    Page<Comment> findCommentsByTextContainingIgnoreCase(String text, Pageable pageable);
 }

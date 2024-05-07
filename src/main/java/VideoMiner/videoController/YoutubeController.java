@@ -65,7 +65,7 @@ public class YoutubeController {
         if(response.getBody() == null){
             throw new ChannelNotFoundException();
         } else {
-            return YoutubeTransform.convertToChannel(response.getBody(), id);
+            return VideoMiner.transforms.youtube.convertToChannel(response.getBody(), id);
         }
     }
 

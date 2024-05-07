@@ -15,12 +15,12 @@ import java.util.List;
 
 public class vimeo {
 
-    String baseUriVimeo = "https://api.vimeo.com/channels/";
+    static String baseUriVimeo = "https://api.vimeo.com/channels/";
 
-    String tokenVimeo = "152307b18fa3949c3591a895137abe8e";
-    RestTemplate restTemplate = new RestTemplate();
+    static String tokenVimeo = "152307b18fa3949c3591a895137abe8e";
+    static RestTemplate restTemplate = new RestTemplate();
 
-    public Channel convertToChannel(ResponseEntity<VimeoMiner.model.channel.Channel> response, String id) {
+    public static Channel convertToChannel(ResponseEntity<VimeoMiner.model.channel.Channel> response, String id) {
         Channel channelDB = new Channel();
         channelDB.setId(response.getBody().getId());
         channelDB.setDescription(response.getBody().getDescription());
@@ -30,7 +30,7 @@ public class vimeo {
         return channelDB;
     }
 
-    public List<Video> videosDeCanal(String id){
+    public static List<Video> videosDeCanal(String id){
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + tokenVimeo);
         HttpEntity<VideoList> request = new HttpEntity<>(null, header);
@@ -52,7 +52,7 @@ public class vimeo {
         }
         return videos;
     }
-    public List<Comment> ComentariosDeVideo(String id) {
+    public static List<Comment> ComentariosDeVideo(String id) {
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + tokenVimeo);
         HttpEntity<CommentsList> request = new HttpEntity<>(null, header);
@@ -77,7 +77,7 @@ public class vimeo {
 
     }
 
-    public List<Caption> CaptionsDeVideo(String id) {
+    public static List<Caption> CaptionsDeVideo(String id) {
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + tokenVimeo);
         HttpEntity<VimeoMiner.model.caption.CaptionList> request = new HttpEntity<>(null, header);
@@ -100,7 +100,7 @@ public class vimeo {
         return captions;
     }
 
-    public User autorComentario(VimeoMiner.model.user.User user) {
+    public static User autorComentario(VimeoMiner.model.user.User user) {
         User userDB = new User();
         userDB.setId(Long.valueOf(user.getId()));
         userDB.setName(user.getName());

@@ -18,10 +18,10 @@ import java.util.List;
 
 public class youtube {
 
-    String tokenYT = "AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ";
-    String baseUriYT ="https://www.googleapis.com/youtube/v3";
-    RestTemplate restTemplate = new RestTemplate();
-    public VideoMiner.model.Channel convertToChannel(ChannelSearch channelSearch, String id) throws VideoWithoutCommentsException {
+    static String tokenYT = "AIzaSyBSCMH5ASLuIxXKRN-_AV0ExAY_pr7GDiQ";
+    static String baseUriYT ="https://www.googleapis.com/youtube/v3";
+    static RestTemplate restTemplate = new RestTemplate();
+    public static VideoMiner.model.Channel convertToChannel(ChannelSearch channelSearch, String id) throws VideoWithoutCommentsException {
         VideoMiner.model.Channel channel = new VideoMiner.model.Channel();
         channel.setId(channelSearch.getItems().get(0).getId());
         channel.setName(channelSearch.getItems().get(0).getSnippet().getTitle());
@@ -31,7 +31,7 @@ public class youtube {
         return channel;
     }
 
-    public List<Video> videosDeCanal(String id) throws VideoWithoutCommentsException{
+    public static List<Video> videosDeCanal(String id) throws VideoWithoutCommentsException{
         HttpHeaders header = new HttpHeaders();
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, header);
         String uri = baseUriYT + "/search" + "?key=" + tokenYT + "&channelId=" + id + "&part=snippet";
@@ -53,7 +53,7 @@ public class youtube {
 
         return videos;
     }
-    public List<Comment> ComentariosDeVideo(String id) throws VideoWithoutCommentsException {
+    public static List<Comment> ComentariosDeVideo(String id) throws VideoWithoutCommentsException {
         HttpHeaders header = new HttpHeaders();
         HttpEntity<CommentSearch> request = new HttpEntity<>(null, header);
 
@@ -77,13 +77,13 @@ public class youtube {
             return comments;
         }
     }
-    private User AutorDeComentario(String name) {
+    private static User AutorDeComentario(String name) {
         User user = new User();
         user.setName(name);
         return user;
     }
 
-    public List<Caption> CaptionsDeVideo(String id) {
+    public static List<Caption> CaptionsDeVideo(String id) {
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + tokenYT);
         HttpEntity<VimeoMiner.model.caption.CaptionList> request = new HttpEntity<>(null, header);

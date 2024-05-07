@@ -1,11 +1,14 @@
 package VideoMiner.videoController;
 
 import VideoMiner.model.Channel;
+import VideoMiner.model.Video;
 import VideoMiner.repository.CaptionRepository;
 import VideoMiner.model.Caption;
 import java.util.*;
 
+import VideoMiner.repository.VideoRepository;
 import exception.CaptionNotFoundException;
+import exception.VideoNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,24 +27,26 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name="Captions", description = "Captions operations")
 @RestController
-@RequestMapping("/videominer/captions")
+@RequestMapping("/videominer")
 public class CaptionController {
 
     @Autowired
     CaptionRepository captionRepository;
+    @Autowired
+    VideoRepository videoRepository;
 
-    @Operation(summary = "Find all captions", description = "Retrieve all captions from VideoMiner", tags = { "Captions", "Get Operations"})
+    @Operation(summary = "Find all captions", description = "Retrieve all captions from VideoMiner", tags = { "Captions", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Captions from the database",
                     content = {@Content(schema = @Schema(implementation = Caption.class),
                             mediaType = "application/json")
                     })
     })
-    @GetMapping
+    @GetMapping("/captions")
     public List<Caption> getCaptions(@Parameter(description = "Name of the caption. Used to search channels by its name.") @RequestParam(required = false) String name,
                                      @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                      @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show 5 captions per page.")@RequestParam(defaultValue = "5") int size) {
+                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show 5 captions per page.")@RequestParam(defaultValue = "6") int size) {
 
         Pageable paging;
 
@@ -65,7 +70,7 @@ public class CaptionController {
 
     }
 
-    @Operation(summary = "Find a caption by id", description = "Find a caption by id in VideoMiner", tags = { "Captions", "Get operations"})
+    @Operation(summary = "Find a caption by id", description = "Retrieve a caption by id in VideoMiner", tags = { "Captions", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Caption from VideoMiner by its ID",
                     content = {@Content(schema = @Schema(implementation = Caption.class),
@@ -76,7 +81,7 @@ public class CaptionController {
                     content = {@Content(schema = @Schema())
                     })
     })
-    @GetMapping("/{id}")
+    @GetMapping("/captions/{id}")
     public Caption getCaptionById(@Parameter(description = "ID of the caption to be searched") @PathVariable String id) throws CaptionNotFoundException {
         Optional<Caption> foundCaption = captionRepository.findAll().stream().filter(c -> c.getId().equals(id)).findFirst();
 
@@ -87,21 +92,45 @@ public class CaptionController {
         return foundCaption.get();
     }
 
-    @Operation(summary = "Create a caption", description = "Post a caption to the database", tags = { "Captions", "Post Operations"})
+    @Operation(summary = "Find a list of captions by video id", description = "Retrieve a list of captions from a video given the video ID", tags = { "Captions", "Get operations"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of captions from a video by its ID",
+                    content = {@Content(schema = @Schema(implementation = Caption.class),
+                            mediaType = "application/json")
+                    }),
+
+            @ApiResponse(responseCode = "404", description = "Video not found",
+                    content = {@Content(schema = @Schema())
+                    })
+    })
+    @GetMapping("videos/{id}/captions")
+    public List<Caption> getCaptionsByVideoId(@Parameter(description = "ID of the video to be searched") @PathVariable String id) throws VideoNotFoundException {
+        Optional<Video> foundVideo = videoRepository.findAll().stream().filter(c -> c.getId().equals(id)).findFirst();
+
+        if (foundVideo.isEmpty()) {
+            throw new VideoNotFoundException();
+        }
+
+        return foundVideo.get().getCaptions();
+    }
+
+    @Operation(summary = "Create a caption", description = "Post a caption to the database", tags = { "Captions", "Post operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Caption posted in the database",
                     content = {@Content(schema = @Schema(implementation = Caption.class),
                             mediaType = "application/json")
                     })
     })
-    @PostMapping
+
+
+    @PostMapping("/captions/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Caption create(@Parameter(description = "Caption to be posted in the database")@Valid @RequestBody Caption caption) {
         captionRepository.save(caption);
         return caption;
     }
 
-    @Operation(summary = "Update a caption", description = "Update caption information given the caption ID.", tags = { "Captions", "Put Operations"})
+    @Operation(summary = "Update a caption", description = "Update caption information given the caption ID.", tags = { "Captions", "Put operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Caption updated",
                     content = {@Content(schema = @Schema())
@@ -111,7 +140,7 @@ public class CaptionController {
                     content = {@Content(schema = @Schema())
                     })
     })
-    @PutMapping("/{id}")
+    @PutMapping("captions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Parameter(description = "ID of the caption to be updated")@PathVariable Long id,
                        @Parameter(description = "Caption object with the updated information")@Valid @RequestBody Caption caption) throws CaptionNotFoundException {
@@ -127,7 +156,7 @@ public class CaptionController {
         }
     }
 
-    @Operation(summary = "Delete a caption", description = "Delete a caption from the database given the caption ID", tags = { "Captions", "Delete Operations"})
+    @Operation(summary = "Delete a caption", description = "Delete a caption from the database given the caption ID", tags = { "Captions", "Delete operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Caption deleted",
                     content = {@Content(schema = @Schema())
@@ -136,7 +165,7 @@ public class CaptionController {
                     content = {@Content(schema = @Schema())
                     })
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/captions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@Parameter(description = "ID of the caption to be deleted")@PathVariable Long id) throws CaptionNotFoundException {
         Optional<Caption> captionToBeDeleted = captionRepository.findById(id);
