@@ -17,12 +17,16 @@ Here are the instructions to install and run the project:
 * **Clone the Repository:** Clone the repository to your local machine using the command git clone <repository-url>. Replace <repository-url> with the URL of this GitHub repository.
 * **Navigate to the project Directory:** Use the command cd <project-name> to navigate into the project directory. Replace <project-name> with the name of the project.
 * **Build the project:** Run the command mvn clean install to build the project and install any necessary dependencies.
-* **Run the application:** Run the command mvn spring-boot:run to start the application.
+* **Run the application:** Run the command mvn spring-boot:run to start the application.  
 *Note: The application uses tokens to access Vimeo and YouTube APIs. Make sure to replace the placeholders in VimeoController.java and YoutubeController.java with your actual tokens.*
 
 
 ## Use
-
+As stated in the introduction, this application is a video mining tool that interacts with both Vimeo and YouTube APIs.  
+It is built using Java, Spring Boot, and Maven. The application allows users to fetch and store information about specific channels from Vimeo and YouTube.  
+Also, videoMiner application incorporates automatically generated documentation using OpenAPI specification laguange (OAS).  
+You can access to this documentation running the application and clicking the next link: http://localhost:8080/swagger-ui/index.html  
+Finally, you can find some expample API calls in the next PostMan collection:
 
 
 ## Contribution
@@ -32,9 +36,9 @@ gitHub profile: https://github.com/josemgarciar
 
 ### Julian Romero Parejo
 email: julrompar@alum.us.es  
-gitHub profile: https://github.com/julrompar
+GitHub profile: https://github.com/julrompar
 
 ### Fernando Triguero Caballo
 email: fertricab@alum.us.es  
-gitHub profile: https://github.com/FernandoTC18  
+GitHub profile: https://github.com/FernandoTC18  
 
