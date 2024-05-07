@@ -1,8 +1,8 @@
 # VideoMiner Application
 
 VideoMiner is a robust Java application that leverages the power of Spring Boot and Maven to interact with video data from Vimeo and YouTube. 
-It uses the Vimeo and YouTube APIs to fetch and process video data, including details about channels, videos, comments, and captions. 
-The application uses Spring's RestTemplate to make HTTP requests to the APIs and process the responses. It also includes a model layer that represents the data structures returned by the APIs, which are then transformed into a format suitable for further processing or storage.
+It uses the Vimeo and YouTube APIs to fetch and process video data, including details about channels, videos, comments, and captions.   
+The application uses Spring's RestTemplate to make HTTP requests to the APIs and process the responses. It also includes a model layer that represents the data structures returned by the APIs, which are then transformed into a format suitable for further processing or storage.  
 In essence, VideoMiner is a comprehensive tool for mining and processing video data from popular platforms, providing a solid foundation for any project that requires interaction with such data.The application is designed to convert API responses into a more manageable format, storing them in custom data models for further use. This includes details such as video descriptions, release times, and associated comments.
 
 ## Contents Table
