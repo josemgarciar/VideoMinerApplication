@@ -17,7 +17,8 @@ Here are the instructions to install and run the project:
 * **Clone the Repository:** Clone the repository to your local machine using the command git clone <https://github.com/josemgarciar/VideoMinerApplication)>.
 * **Navigate to the project Directory:** Use the command cd *VideoMinerApplication* to navigate into the project directory.
 * **Build the project:** Run the command mvn clean install to build the project and install any necessary dependencies.
-* **Run the application:** Run the command mvn spring-boot:run to start the application.  
+* **Run the application:** Run the command mvn spring-boot:run to start the application.
+  
 *Note: The application uses tokens to access Vimeo and YouTube APIs. Make sure to replace the placeholders in VimeoController.java and YoutubeController.java with your actual tokens.*
 
 
