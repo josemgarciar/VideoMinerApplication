@@ -31,7 +31,7 @@ public class VimeoController {
     String baseUriVimeo = "https://api.vimeo.com/channels/";
     String tokenVimeo = "152307b18fa3949c3591a895137abe8e";
 
-    VideoMiner.transforms.vimeo VimeoTransform;
+
 
     RestTemplate restTemplate = new RestTemplate();
 
@@ -48,7 +48,9 @@ public class VimeoController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Channel findOneVimeo(@Parameter(description ="ID of the channel to be searched") @PathVariable String id) throws ChannelNotFoundException {
+    public Channel findOneVimeo(@Parameter(description ="ID of the channel to be searched") @PathVariable String id,
+                                @Parameter(description = "Maximum number of videos to be posted. Only used when called from the POST operation")@RequestParam(required = false, defaultValue = "10") Integer maxVideos,
+                                @Parameter(description = "Maximum number of comments to be posted. Only used when called from the POST operation")@RequestParam(required = false, defaultValue = "10")Integer maxComments) throws ChannelNotFoundException {
 
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "bearer " + tokenVimeo);
@@ -59,10 +61,13 @@ public class VimeoController {
         if(response.getBody() == null){
             throw new ChannelNotFoundException();
         } else {
-            return VideoMiner.transforms.vimeo.convertToChannel(response, id);
+            Channel videoChannel = VideoMiner.transforms.vimeo.convertToChannel(response, id);
+            videoChannel.setVideos(videoChannel.getVideos().subList(0, maxVideos));
+            for (Video v : videoChannel.getVideos()){
+                v.setComments(v.getComments().subList(0,maxComments));
+            }
+            return videoChannel;
         }
-
-
     }
 
     @Operation(summary = "Post a Vimeo Channel", description = "Post a Vimeo Channel in DataBase giving the id of the Vimeo channel", tags = { "Vimeo", "Post operations"})
@@ -78,8 +83,10 @@ public class VimeoController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
-    public Channel saveVimeo(@Parameter (description = "ID of the channel to be searched in Vimeo and saved in the DataBase") @PathVariable String id) throws ChannelNotFoundException {
-        Channel channel = findOneVimeo(id);
+    public Channel saveVimeo(@Parameter (description = "ID of the channel to be searched in Vimeo and saved in the DataBase") @PathVariable String id,
+    @Parameter(description= "Maximum number of videos to post")@RequestParam(required = false, defaultValue = "10") Integer maxVideos,
+    @Parameter(description= "Maximum number of comments to post")@RequestParam(required = false, defaultValue = "10") Integer maxComments) throws ChannelNotFoundException {
+        Channel channel = findOneVimeo(id, maxVideos, maxComments);
         channelRepository.save(channel);
         return channel;
     }
