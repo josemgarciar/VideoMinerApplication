@@ -7,11 +7,12 @@ In essence, VideoMiner is a comprehensive tool for mining and processing video d
 
 ## Contents Table
 
-1. [Instalation](#Instalation)
+1. [Installation](#Instalation)
 2. [Use](#Use)
 3. [Contribution](#Contribution)
 
-## Instalation
+## Installation
+
 
 
 
