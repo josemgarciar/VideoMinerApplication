@@ -3,7 +3,7 @@
 VideoMiner is a robust Java application that leverages the power of Spring Boot and Maven to interact with video data from Vimeo and YouTube. 
 It uses the Vimeo and YouTube APIs to fetch and process video data, including details about channels, videos, comments, and captions.   
 The application uses Spring's RestTemplate to make HTTP requests to the APIs and process the responses. It also includes a model layer that represents the data structures returned by the APIs, which are then transformed into a format suitable for further processing or storage.  
-In essence, VideoMiner is a comprehensive tool for mining and processing video data from popular platforms, providing a solid foundation for any project that requires interaction with such data.The application is designed to convert API responses into a more manageable format, storing them in custom data models for further use. This includes details such as video descriptions, release times, and associated comments.
+In essence, VideoMiner is a comprehensive tool for mining and processing video data from popular platforms, providing a solid foundation for any project that requires interaction with such data. The application is designed to convert API responses into a more manageable format, storing them in custom data models for further use. This includes details such as video descriptions, release times, and associated comments.
 
 ## Contents Table
 
@@ -27,7 +27,7 @@ As stated in the introduction, this application is a video mining tool that inte
 It is built using Java, Spring Boot, and Maven. The application allows users to fetch and store information about specific channels from Vimeo and YouTube.  
 Also, videoMiner application incorporates automatically generated documentation using OpenAPI specification laguange (OAS).  
 You can access to the documentation running the application and clicking the next link: http://localhost:8080/swagger-ui/index.html  
-Finally, you can find some expample API calls in the next PostMan collection:  
+Finally, you can find some example API calls in the next PostMan collection:  
 https://uses0-my.sharepoint.com/:f:/g/personal/josgarros_alum_us_es/Er0quKLef6xIoVfGAM1DrQ4BjNGppoIta3AqIyEJ5-aaeA?e=lEEx23
 
 ## Contribution
