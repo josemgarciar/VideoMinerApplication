@@ -26,11 +26,12 @@ Here are the instructions to install and run the project:
 As stated in the introduction, this application is a video mining tool that interacts with both Vimeo and YouTube APIs.  
 It is built using Java, Spring Boot, and Maven. The application allows users to fetch and store information about specific channels from Vimeo and YouTube.  
 Also, videoMiner application incorporates automatically generated documentation using OpenAPI specification laguange (OAS).  
-You can access to this documentation running the application and clicking the next link: http://localhost:8080/swagger-ui/index.html  
-Finally, you can find some expample API calls in the next PostMan collection:
-
+You can access to the documentation running the application and clicking the next link: http://localhost:8080/swagger-ui/index.html  
+Finally, you can find some expample API calls in the next PostMan collection:  
+https://uses0-my.sharepoint.com/:f:/g/personal/josgarros_alum_us_es/Er0quKLef6xIoVfGAM1DrQ4BjNGppoIta3AqIyEJ5-aaeA?e=lEEx23
 
 ## Contribution
+
 ### José Manuel García Rosa
 email: josgarros@alum.us.es  
 gitHub profile: https://github.com/josemgarciar  
