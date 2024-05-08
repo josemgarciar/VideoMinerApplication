@@ -14,7 +14,7 @@ In essence, VideoMiner is a comprehensive tool for mining and processing video d
 ## Installation
 Here are the instructions to install and run the project:
 * **Prerequisites:** Make sure you have Java and Maven installed on your system.
-* **Clone the Repository:** Clone the repository to your local machine using the command git clone <https://github.com/josemgarciar/VideoMinerApplication)>.
+* **Clone the Repository:** Clone the repository to your local machine using the command git clone <https://github.com/josemgarciar/VideoMinerApplication>.
 * **Navigate to the project Directory:** Use the command cd *VideoMinerApplication* to navigate into the project directory.
 * **Build the project:** Run the command mvn clean install to build the project and install any necessary dependencies.
 * **Run the application:** Run the command mvn spring-boot:run to start the application.
