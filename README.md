@@ -34,7 +34,7 @@ https://uses0-my.sharepoint.com/:f:/g/personal/josgarros_alum_us_es/Er0quKLef6xI
 
 ### José Manuel García Rosa
 email: josgarros@alum.us.es  
-gitHub profile: https://github.com/josemgarciar  
+GitHub profile: https://github.com/josemgarciar  
 
 ### Julian Romero Parejo
 email: julrompar@alum.us.es  
