@@ -38,7 +38,7 @@ public class ChannelController {
 
     @Operation(summary = "Get all channels", description = "Retrieve all channels from VideoMiner", tags = { "Channels", "Get operations"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Channel from Vimeo",
+            @ApiResponse(responseCode = "200", description = "Channel from Video",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
                             mediaType = "application/json")
                     })
@@ -72,7 +72,7 @@ public class ChannelController {
         return pageChannels.getContent();
     }
 
-    @Operation(summary = "Find a channel by id", description = "Find a channel by id in VimeoMiner", tags = { "Channels", "Get operations"})
+    @Operation(summary = "Find a channel by id", description = "Find a channel by id in VideoMiner", tags = { "Channels", "Get operations"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Channel from VideoMiner",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
