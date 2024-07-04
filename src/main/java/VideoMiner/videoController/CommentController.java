@@ -6,6 +6,7 @@ import VideoMiner.model.Comment;
 import VideoMiner.model.Video;
 import VideoMiner.repository.CommentRepository;
 import VideoMiner.repository.VideoRepository;
+import exception.CaptionNotFoundException;
 import exception.ChannelNotFoundException;
 import exception.CommentNotFoundException;
 import exception.VideoNotFoundException;
@@ -41,13 +42,17 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "Captions from the database",
                     content = {@Content(schema = @Schema(implementation = Comment.class),
                             mediaType = "application/json")
+
+                    }),
+            @ApiResponse(responseCode = "404", description = "Comment not found",
+                    content = {@Content(schema = @Schema())
                     })
     })
     @GetMapping("/comments")
     public List<Comment> getComments( @Parameter(description = "Word or text used to search if comments contains that string.") @RequestParam(required = false) String text,
                                      @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                      @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show five comments per page.")@RequestParam(defaultValue = "10") int size) {
+                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show ten comments per page.")@RequestParam(defaultValue = "10") int size) throws CommentNotFoundException {
 
         Pageable paging;
 
@@ -65,8 +70,11 @@ public class CommentController {
         if(text == null) {
           pageComments = repository.findAll(paging);
        } else {
-            pageComments = repository.findCommentsByTextContainingIgnoreCase(text, paging); //TODO: Hay que probar como funciona (o si funciona) el findByName, ya que comments no tiene name.
+            pageComments = repository.findCommentsByTextContainingIgnoreCase(text, paging);
         }
+
+        if(pageComments.getContent().isEmpty()) { throw new CommentNotFoundException();}
+
         return pageComments.getContent();
     }
 

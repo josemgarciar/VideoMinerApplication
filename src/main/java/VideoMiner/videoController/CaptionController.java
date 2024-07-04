@@ -40,13 +40,16 @@ public class CaptionController {
             @ApiResponse(responseCode = "200", description = "Captions from the database",
                     content = {@Content(schema = @Schema(implementation = Caption.class),
                             mediaType = "application/json")
+                    }),
+            @ApiResponse(responseCode = "404", description = "Caption not found",
+                    content = {@Content(schema = @Schema())
                     })
     })
     @GetMapping("/captions")
-    public List<Caption> getCaptions(@Parameter(description = "Name of the caption. Used to search channels by its name.") @RequestParam(required = false) String name,
+    public List<Caption> getCaptions(@Parameter(description = "Language of the caption. Used to search captions by its language.") @RequestParam(required = false) String language,
                                      @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                      @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show 5 captions per page.")@RequestParam(defaultValue = "6") int size) {
+                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show 5 captions per page.")@RequestParam(defaultValue = "5") int size) throws CaptionNotFoundException {
 
         Pageable paging;
 
@@ -61,11 +64,13 @@ public class CaptionController {
 
         Page<Caption> pageCaptions;
 
-        if(name == null) {
+        if(language == null) {
             pageCaptions = captionRepository.findAll(paging);
         } else {
-            pageCaptions = captionRepository.findByName(name, paging);
+            pageCaptions = captionRepository.findByLanguageContaining(language, paging);
         }
+
+        if(pageCaptions.getContent().isEmpty()) {throw new CaptionNotFoundException();}
         return pageCaptions.getContent();
 
     }

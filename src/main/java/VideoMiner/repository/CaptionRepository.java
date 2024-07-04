@@ -8,6 +8,6 @@ import VideoMiner.model.Caption;
 
 @Repository
 public interface CaptionRepository extends JpaRepository<Caption,Long> {
-    Page<Caption> findByName(String name, Pageable pageable);
+    Page<Caption> findByLanguageContaining(String language, Pageable pageable);
     Page<Caption> findAll(Pageable pageable);
 }

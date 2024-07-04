@@ -36,13 +36,16 @@ public class VideoController {
             @ApiResponse(responseCode = "200", description = "Videos from the database",
                     content = {@Content(schema = @Schema(implementation = Video.class),
                             mediaType = "application/json")
+                    }),
+            @ApiResponse(responseCode = "404", description = "Video not found",
+                    content = {@Content(schema = @Schema())
                     })
     })
     @GetMapping
     public List<Video> getVideos(@Parameter(description = "Name of the video. Used to search videos by its name.") @RequestParam(required = false) String name,
                                  @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                  @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                 @Parameter(description = "Size of the response page. By default, VideoMiner will show one video per page.")@RequestParam(defaultValue = "5") int size) {
+                                 @Parameter(description = "Size of the response page. By default, VideoMiner will show five video per page.")@RequestParam(defaultValue = "5") int size) throws VideoNotFoundException {
         Pageable paging;
 
         if (order != null) {
@@ -61,6 +64,8 @@ public class VideoController {
         } else {
             pageVideos = videoRepository.findByName(name, paging);
         }
+
+        if(pageVideos.getContent().isEmpty()) {throw new VideoNotFoundException();}
         return pageVideos.getContent();
     }
 

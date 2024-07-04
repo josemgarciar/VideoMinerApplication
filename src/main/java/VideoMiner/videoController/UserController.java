@@ -35,13 +35,16 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Users from the database",
                     content = {@Content(schema = @Schema(implementation = Comment.class),
                             mediaType = "application/json")
+                    }),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = {@Content(schema = @Schema())
                     })
     })
     @GetMapping
     public List<User> getUsers(@Parameter(description = "Name of the user. Used to search users by its name.") @RequestParam(required = false) String name,
                                @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                               @Parameter(description = "Size of the response page. By default, VideoMiner will show five users per page.")@RequestParam(defaultValue = "5") int size) {
+                               @Parameter(description = "Size of the response page. By default, VideoMiner will show five users per page.")@RequestParam(defaultValue = "5") int size) throws UserNotFoundException {
 
 
         Pageable paging;
@@ -62,6 +65,8 @@ public class UserController {
         } else {
             pageUsers = userRepository.findByName(name, paging);
         }
+
+        if(pageUsers.getContent().isEmpty()) {throw new UserNotFoundException();}
         return pageUsers.getContent();
     }
 

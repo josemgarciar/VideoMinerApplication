@@ -41,13 +41,16 @@ public class ChannelController {
             @ApiResponse(responseCode = "200", description = "Channel from Video",
                     content = {@Content(schema = @Schema(implementation = Channel.class),
                             mediaType = "application/json")
+                    }),
+            @ApiResponse(responseCode = "404", description = "Channel not found",
+                    content = {@Content(schema = @Schema())
                     })
     })
     @GetMapping()
     public List<Channel> getChannels(@Parameter(description = "Name of the channel. Used to search channels by its name.") @RequestParam(required = false) String name,
                                      @Parameter(description = "If present, determines the order of the response according to the parameter received.")@RequestParam(required = false) String order, // + o -
                                      @Parameter(description = "Number of the response page. By default, VideoMiner will show the first page.")@RequestParam(defaultValue = "0") int page,
-                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show one channel per page.")@RequestParam(defaultValue = "1") int size) {
+                                     @Parameter(description = "Size of the response page. By default, VideoMiner will show one channel per page.")@RequestParam(defaultValue = "1") int size) throws ChannelNotFoundException {
 
         Pageable paging;
 
@@ -68,6 +71,8 @@ public class ChannelController {
         } else {
             pageChannels = repository.findByName(name, paging);
         }
+
+        if(pageChannels.getContent().isEmpty()) {throw new ChannelNotFoundException();}
 
         return pageChannels.getContent();
     }
